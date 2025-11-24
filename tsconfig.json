@@ -1,0 +1,51 @@
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@flight-demo/domain/boarding": ["libs/domain/boarding/src/index.ts"],
+      "@flight-demo/domain/booking": ["libs/domain/booking/src/index.ts"],
+      "@flight-demo/domain/booking-api-boarding": ["libs/domain/booking/src/lib/api-boarding/api.ts"],
+      "@flight-demo/domain/checkin": ["libs/domain/checkin/src/index.ts"],
+      "@flight-demo/shared/core": ["libs/shared/core/src/index.ts"],
+      "@flight-demo/shared/navigation": ["libs/shared/navigation/src/index.ts"],
+      "@flight-demo/shared/state": ["libs/shared/state/src/index.ts"],
+    },
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "preserve"
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  },
+  "files": [],
+  "references": [
+    { "path": "./apps/shell/tsconfig.app.json" },
+    { "path": "./apps/shell/tsconfig.spec.json" },
+    { "path": "./libs/domain/boarding/tsconfig.lib.json" },
+    { "path": "./libs/domain/boarding/tsconfig.spec.json" },
+    { "path": "./libs/domain/booking/tsconfig.lib.json" },
+    { "path": "./libs/domain/booking/tsconfig.spec.json" },
+    { "path": "./libs/domain/checkin/tsconfig.lib.json" },
+    { "path": "./libs/domain/checkin/tsconfig.spec.json" },
+    { "path": "./libs/shared/navigation/tsconfig.lib.json" },
+    { "path": "./libs/shared/navigation/tsconfig.spec.json" },
+    { "path": "./libs/shared/core/tsconfig.lib.json" },
+    { "path": "./libs/shared/core/tsconfig.spec.json" },
+    { "path": "./libs/shared/state/tsconfig.lib.json" },
+    { "path": "./libs/shared/state/tsconfig.spec.json" }
+  ]
+}

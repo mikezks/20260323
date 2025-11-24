@@ -1,0 +1,40 @@
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">Departures</h2>
+  </div>
+
+  <div class="card-body">
+    <div class="control-group">
+      <label for="city">City</label>
+      <input id="city" [formControl]="control" class="form-control" />
+    </div>
+
+    @if (loading) {
+      <div>Loading ...</div>
+    }
+  </div>
+</div>
+
+@if (flights$ | async; as flights) {
+  @if (flights.length) {
+    <div class="card">
+      <div class="card-body">
+        <table class="table table-condensed">
+          @for (f of flights; track f) {
+            <tr>
+              <td>
+                <span class="badge badge-pill badge-info">
+                  {{ f.id }}
+                </span>
+              </td>
+              <td>{{ f.from }}</td>
+              <td>{{ f.to }}</td>
+              <td>{{ f.date | date : "dd.MM.yyyy HH:mm" }}</td>
+            </tr>
+          }
+        </table>
+      </div>
+    </div>
+  }
+}
+

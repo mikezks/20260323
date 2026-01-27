@@ -110,7 +110,13 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
+            "browsers": ["Chromium"],
             "tsConfig": "libs/domain/booking/tsconfig.spec.json"
+          },
+          "configurations": {
+            "ci": {
+              "browsers": ["ChromiumHeadless"]
+            }
           }
         }
       }

@@ -14,3 +14,13 @@ export const initialPassenger: Passenger = {
   bonusMiles: 0,
   passengerStatus: ''
 };
+
+export interface PassengerFilter {
+  firstname: string;
+  lastname: string;
+}
+
+export const initialPassengerFilter: PassengerFilter = {
+  firstname: '',
+  lastname: ''
+};

@@ -3,6 +3,7 @@ const eslint = require("@eslint/js");
 const { defineConfig } = require("eslint/config");
 const tseslint = require("typescript-eslint");
 const angular = require("angular-eslint");
+const sheriff = require('@softarc/eslint-plugin-sheriff');
 
 
 module.exports = defineConfig([
@@ -13,6 +14,7 @@ module.exports = defineConfig([
       tseslint.configs.recommended,
       tseslint.configs.stylistic,
       angular.configs.tsRecommended,
+      sheriff.configs.all
     ],
     processor: angular.processInlineTemplates,
     rules: {

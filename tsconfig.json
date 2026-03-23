@@ -33,19 +33,53 @@
   },
   "files": [],
   "references": [
-    { "path": "./apps/shell/tsconfig.app.json" },
-    { "path": "./apps/shell/tsconfig.spec.json" },
-    { "path": "./libs/domain/boarding/tsconfig.lib.json" },
-    { "path": "./libs/domain/boarding/tsconfig.spec.json" },
-    { "path": "./libs/domain/booking/tsconfig.lib.json" },
-    { "path": "./libs/domain/booking/tsconfig.spec.json" },
-    { "path": "./libs/domain/checkin/tsconfig.lib.json" },
-    { "path": "./libs/domain/checkin/tsconfig.spec.json" },
-    { "path": "./libs/shared/navigation/tsconfig.lib.json" },
-    { "path": "./libs/shared/navigation/tsconfig.spec.json" },
-    { "path": "./libs/shared/core/tsconfig.lib.json" },
-    { "path": "./libs/shared/core/tsconfig.spec.json" },
-    { "path": "./libs/shared/state/tsconfig.lib.json" },
-    { "path": "./libs/shared/state/tsconfig.spec.json" }
+    {
+      "path": "./apps/shell/tsconfig.app.json"
+    },
+    {
+      "path": "./apps/shell/tsconfig.spec.json"
+    },
+    {
+      "path": "./libs/domain/boarding/tsconfig.lib.json"
+    },
+    {
+      "path": "./libs/domain/boarding/tsconfig.spec.json"
+    },
+    {
+      "path": "./libs/domain/booking/tsconfig.lib.json"
+    },
+    {
+      "path": "./libs/domain/booking/tsconfig.spec.json"
+    },
+    {
+      "path": "./libs/domain/checkin/tsconfig.lib.json"
+    },
+    {
+      "path": "./libs/domain/checkin/tsconfig.spec.json"
+    },
+    {
+      "path": "./libs/shared/navigation/tsconfig.lib.json"
+    },
+    {
+      "path": "./libs/shared/navigation/tsconfig.spec.json"
+    },
+    {
+      "path": "./libs/shared/core/tsconfig.lib.json"
+    },
+    {
+      "path": "./libs/shared/core/tsconfig.spec.json"
+    },
+    {
+      "path": "./libs/shared/state/tsconfig.lib.json"
+    },
+    {
+      "path": "./libs/shared/state/tsconfig.spec.json"
+    },
+    {
+      "path": "./apps/miles/tsconfig.app.json"
+    },
+    {
+      "path": "./apps/miles/tsconfig.spec.json"
+    }
   ]
 }

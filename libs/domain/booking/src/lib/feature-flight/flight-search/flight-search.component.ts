@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, computed, effect, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Flight } from '../../logic-flight/model/flight';
 import { injectTicketsFacade } from '../../logic-flight/state/facade';
@@ -19,6 +19,7 @@ import { FlightFilterComponent } from '../../ui-flight/flight-filter/flight-filt
 })
 export class FlightSearchComponent {
   private ticketsFacade = injectTicketsFacade();
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   protected filter = signal({
     from: 'Paris',
@@ -33,10 +34,17 @@ export class FlightSearchComponent {
     5: true
   };
   protected flights$ = this.ticketsFacade.flights$;
+  protected firstname = 'Mary';
 
   constructor() {
     effect(() => console.log(this.route()));
     effect(() => this.search());
+
+    setTimeout(() => {
+      this.firstname = 'Peter';
+      // this.cdRef.markForCheck();
+      console.log(this.firstname);
+    }, 5_000);
   }
 
   protected search(): void {

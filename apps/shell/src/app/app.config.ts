@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideCheckNoChangesConfig } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { provideRouterFeature } from '@flight-demo/shared/state';
 import { provideEffects } from '@ngrx/effects';
@@ -17,5 +17,9 @@ export const appConfig: ApplicationConfig = {
     provideEffects(),
     provideRouterFeature(),
     provideStoreDevtools(),
+    provideCheckNoChangesConfig({
+      exhaustive: true,
+      interval: 3_000
+    })
   ]
 };

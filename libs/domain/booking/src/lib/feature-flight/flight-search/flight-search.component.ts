@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, signal, untracked } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Flight } from '../../logic-flight/model/flight';
 import { injectTicketsFacade } from '../../logic-flight/state/facade';
@@ -36,36 +36,7 @@ export class FlightSearchComponent {
 
   constructor() {
     effect(() => console.log(this.route()));
-    
-    // Explicit Effect
-    effect(() => {
-      this.filter();
-      untracked(() => this.search());
-    });
-
-    // Signal Update-Behavior
-    console.log(this.filter().from);
-    this.filter.update(curr => ({ ...curr, from: 'Frankfurt' }));
-    console.log(this.filter().from);
-    this.filter.update(curr => ({ ...curr, from: 'Madrid' }));
-    console.log(this.filter().from);
-    this.filter.update(curr => ({ ...curr, from: 'Barcelona' }));
-    console.log(this.filter().from);
-    this.filter.update(curr => ({ ...curr, from: 'Rome' }));
-    console.log(this.filter().from);
-    this.filter.update(curr => ({ ...curr, from: 'Athens' }));
-    console.log(this.filter().from);
-    this.filter.update(curr => ({ ...curr, from: 'Oslo' }));
-    console.log(this.filter().from);
-
-    // Glitch-free Behavior
-    const counter = signal(0);
-    const isEven = computed(() => counter() % 2 === 0);
-    effect(() => console.log({
-      counter: untracked(() => counter()),
-      isEven: isEven()
-    }));
-    setInterval(() => counter.update(curr => curr + 2), 2_000);
+    effect(() => this.search());
   }
 
   protected search(): void {

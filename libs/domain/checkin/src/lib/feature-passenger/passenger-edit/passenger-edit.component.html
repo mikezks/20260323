@@ -41,6 +41,8 @@
         <label for="status">Status:</label>
         <input id="status" [formField]="editForm.passengerStatus" class="form-control" />
       </div>
+
+      <app-address-subform [formField]="editForm.address" />
     </form>
 
     <div class="form-group">

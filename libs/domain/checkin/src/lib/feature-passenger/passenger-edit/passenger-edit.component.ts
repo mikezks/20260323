@@ -1,9 +1,10 @@
 import { httpResource } from '@angular/common/http';
-import { Component, computed, input, numberAttribute } from '@angular/core';
+import { Component, computed, input, linkedSignal, numberAttribute } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { createMetadataKey, form, FormField, metadata, required, schema, SchemaPath, validate } from '@angular/forms/signals';
+import { apply, createMetadataKey, form, FormField, metadata, required, schema, SchemaPath, validate } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
 import { initialPassenger, Passenger } from '../../logic-passenger/model/passenger';
+import { Address, AddressControl, addressSchema, initialAddress } from '@flight-demo/shared/core';
 
 
 const ALLOWED_LASTNAMES = createMetadataKey<string[]>();
@@ -25,7 +26,9 @@ export function validateLastname(
 }
 
 // (3) Field Logic: Validators, Metadata, Conditional Disabled
-export const passengerSchema = schema<Passenger>(passengerPath => {
+export const passengerSchema = schema<Passenger & {
+  address: Address
+}>(passengerPath => {
   metadata(passengerPath.name, ALLOWED_LASTNAMES, () => ['Muster', 'Sorglos', 'Müller']);
   required(passengerPath.firstName, {
     message: 'The Firstname is mandatory. Please enter a value.'
@@ -33,6 +36,7 @@ export const passengerSchema = schema<Passenger>(passengerPath => {
   validateLastname(passengerPath.name,
     'The entered Lastname is not allowed.'
   );
+  apply(passengerPath.address, addressSchema);
 });
 
 
@@ -42,7 +46,8 @@ export const passengerSchema = schema<Passenger>(passengerPath => {
     ReactiveFormsModule,
     RouterLink,
     // (4) UI Control: Template Binding
-    FormField
+    FormField,
+    AddressControl
   ],
   templateUrl: './passenger-edit.component.html'
 })
@@ -52,9 +57,13 @@ export class PassengerEditComponent {
     url: 'https://demo.angulararchitects.io/api/passenger',
     params: { id: this.id() }
   }), { defaultValue: initialPassenger });
+  protected readonly passengerWithAddress = linkedSignal(() => ({
+    ...this.passengerResource.value(),
+    address: initialAddress
+  }));
 
   // (2) Field State: value, valid, dirty, touched, ...
-  protected readonly editForm = form(this.passengerResource.value, passengerSchema);
+  protected readonly editForm = form(this.passengerWithAddress, passengerSchema);
 
   readonly id = input(0, { transform: numberAttribute });
 

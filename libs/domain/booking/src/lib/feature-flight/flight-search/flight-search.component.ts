@@ -34,17 +34,10 @@ export class FlightSearchComponent {
     5: true
   };
   protected flights$ = this.ticketsFacade.flights$;
-  protected firstname = 'Mary';
 
   constructor() {
     effect(() => console.log(this.route()));
     effect(() => this.search());
-
-    setTimeout(() => {
-      this.firstname = 'Peter';
-      // this.cdRef.markForCheck();
-      console.log(this.firstname);
-    }, 5_000);
   }
 
   protected search(): void {

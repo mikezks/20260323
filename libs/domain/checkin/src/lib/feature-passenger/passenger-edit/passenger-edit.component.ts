@@ -1,11 +1,26 @@
 import { httpResource } from '@angular/common/http';
 import { Component, input, numberAttribute } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { form, FormField } from '@angular/forms/signals';
+import { form, FormField, required, schema, validate } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
 import { initialPassenger, Passenger } from '../../logic-passenger/model/passenger';
 
+
 // (3) Field Logic: Validators, Metadata, Conditional Disabled
+export const passengerSchema = schema<Passenger>(passengerPath => {
+  required(passengerPath.firstName, {
+    message: 'The Firstname is mandatory. Please enter a value.'
+  });
+  validate(passengerPath.name, ({ value }) =>
+    ['Muster', 'Sorglos', 'Müller'].includes(value())
+      ? null
+      : {
+        kind: 'forbiddenLastname',
+        message: 'The entered Lastname is not allowed.'
+      }
+  )
+});
+
 
 @Component({
   selector: 'app-passenger-edit',
@@ -25,7 +40,7 @@ export class PassengerEditComponent {
   }), { defaultValue: initialPassenger });
 
   // (2) Field State: value, valid, dirty, touched, ...
-  protected readonly editForm = form(this.passengerResource.value);
+  protected readonly editForm = form(this.passengerResource.value, passengerSchema);
 
   readonly id = input(0, { transform: numberAttribute });
   

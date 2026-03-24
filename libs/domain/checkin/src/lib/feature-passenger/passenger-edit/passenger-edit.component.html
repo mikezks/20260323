@@ -14,11 +14,17 @@
         <label for="firstname">Firstname:</label>
         <input id="firstname" [formField]="editForm.firstName" class="form-control" />
       </div>
+      @for (error of editForm.firstName().errors(); track error.kind) {
+        <div class="alert alert-danger">{{ error.message }}</div>
+      }
 
       <div class="form-group">
         <label for="name">Lastname:</label>
         <input id="name" [formField]="editForm.name" class="form-control" />
       </div>
+      @for (error of editForm.name().errors(); track error.kind) {
+        <div class="alert alert-danger">{{ error.message }}</div>
+      }
 
       <div class="form-group">
         <label for="bonusMiles">Bonus Miles:</label>

@@ -22,6 +22,7 @@
         <label for="name">Lastname:</label>
         <input id="name" [formField]="editForm.name" class="form-control" />
       </div>
+      <div class="alert alert-info">{{ allowedLastnames() }}</div>
       @for (error of editForm.name().errors(); track error.kind) {
         <div class="alert alert-danger">{{ error.message }}</div>
       }

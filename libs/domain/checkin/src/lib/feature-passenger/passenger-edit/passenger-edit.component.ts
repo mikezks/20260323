@@ -27,14 +27,11 @@ export class PassengerEditComponent {
   });
 
   readonly id = input(0, { transform: numberAttribute });
-  private readonly id$ = toObservable(this.id);
-  private readonly passenger$ = this.id$.pipe(
-    switchMap(id => this.passengerService.findById(id))
+  private readonly passenger = toSignal(
+    toObservable(this.id).pipe(
+      switchMap(id => this.passengerService.findById(id))
+    ), { initialValue: initialPassenger }
   );
-  private readonly passenger = toSignal(this.passenger$, {
-    // requireSync: true
-    initialValue: initialPassenger
-  });
 
   constructor() {
     effect(() => console.log(this.id(), this.passenger()));

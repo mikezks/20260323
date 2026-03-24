@@ -1,9 +1,15 @@
-import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { Component, DestroyRef, Injector, Input, OnChanges, SimpleChanges, inject, runInInjectionContext } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { routerFeature } from '@flight-demo/shared/state';
 import { Store } from '@ngrx/store';
 import { initialFlight } from '../../logic-flight/model/flight';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FlightService } from '@flight-demo/domain/booking-api-boarding';
 
+function registerCustomDestroyLog(message: string): void {
+  const destroyRef = inject(DestroyRef);
+  destroyRef.onDestroy(() => console.log(message));
+}
 
 @Component({
   selector: 'app-flight-edit',
@@ -14,6 +20,7 @@ import { initialFlight } from '../../logic-flight/model/flight';
 })
 export class FlightEditComponent implements OnChanges {
   private store = inject(Store);
+  private injector = inject(Injector);
 
   @Input() flight = initialFlight;
 
@@ -26,9 +33,13 @@ export class FlightEditComponent implements OnChanges {
   });
 
   constructor() {
-    this.store.select(routerFeature.selectRouteParams).subscribe(
+    this.store.select(routerFeature.selectRouteParams).pipe(
+      takeUntilDestroyed()
+    ).subscribe(
       params => console.log(params)
     );
+
+    registerCustomDestroyLog('Bye, bye! :(');
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -39,5 +50,11 @@ export class FlightEditComponent implements OnChanges {
 
   protected save(): void {
     console.log(this.editForm.value);
+
+    const flightService = runInInjectionContext(
+      this.injector,
+      () => inject(FlightService)
+    );
+    flightService.findById(1).subscribe(console.log);
   }
 }

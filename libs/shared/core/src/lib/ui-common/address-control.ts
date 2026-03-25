@@ -1,7 +1,6 @@
-import { Component, model } from '@angular/core';
-import { FormField, FormValueControl, required, schema } from '@angular/forms/signals';
+import { Component, input } from '@angular/core';
+import { FieldTree, FormField, required, schema } from '@angular/forms/signals';
 import { Address } from './address.model';
-import { injectFieldTree } from './inject-field-tree';
 
 
 export const addressSchema = schema<Address>(addressPath => {
@@ -15,7 +14,7 @@ export const addressSchema = schema<Address>(addressPath => {
   selector: 'app-address-subform',
   imports: [FormField],
   template: `
-    @let addressForm = field();
+    @let addressForm = formField();
 
     <h6>Address</h6>
 
@@ -56,8 +55,6 @@ export const addressSchema = schema<Address>(addressPath => {
     }
   `
 })
-export class AddressControl implements FormValueControl<Address> {
-  protected readonly field = injectFieldTree<Address>();
-  
-  value = model.required<Address>();
+export class AddressControl {
+  readonly formField = input.required<FieldTree<Address>>();
 }

@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, computed, effect, inject, signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Flight } from '../../logic-flight/model/flight';
-import { injectTicketsFacade } from '../../logic-flight/state/facade';
+import { BookingStore } from '../../logic-flight/state/booking.store';
 import { FlightCardComponent } from '../../ui-flight/flight-card/flight-card.component';
 import { FlightFilterComponent } from '../../ui-flight/flight-filter/flight-filter.component';
 
@@ -18,34 +18,17 @@ import { FlightFilterComponent } from '../../ui-flight/flight-filter/flight-filt
   templateUrl: './flight-search.component.html',
 })
 export class FlightSearchComponent {
-  private ticketsFacade = injectTicketsFacade();
-  private readonly cdRef = inject(ChangeDetectorRef);
+  protected store = inject(BookingStore);
 
-  protected filter = signal({
-    from: 'Paris',
-    to: 'New York',
-    urgent: false
-  });
+  protected filter = this.store.filter;
   protected readonly route = computed(
     () => 'From ' + this.filter().from + ' to ' + this.filter().to + '.'
   );
-  protected basket: Record<number, boolean> = {
-    3: true,
-    5: true
-  };
-  protected flights = this.ticketsFacade.flights;
+  protected basket = this.store.basket;
+  protected flights = this.store.flights;
 
   constructor() {
-    effect(() => console.log(this.route()));
-    effect(() => this.search());
-  }
-
-  protected search(): void {
-    if (!this.filter().from || !this.filter().to) {
-      return;
-    }
-
-    this.ticketsFacade.search(this.filter());
+    this.store.loadFlights(this.filter);
   }
 
   protected delay(flight: Flight): void {
@@ -59,10 +42,14 @@ export class FlightSearchComponent {
       delayed: true
     };
 
-    this.ticketsFacade.update(newFlight);
+    this.store.setFlights(
+      this.flights().map(
+        flight => flight.id === newFlight.id ? newFlight : flight
+      )
+    );
   }
 
   protected reset(): void {
-    this.ticketsFacade.reset();
+    this.store.setFlights([]);
   }
 }

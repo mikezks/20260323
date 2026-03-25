@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Flight } from '../../logic-flight/model/flight';
 import { BookingStore } from '../../logic-flight/state/booking.store';
@@ -20,17 +20,6 @@ import { FlightFilterComponent } from '../../ui-flight/flight-filter/flight-filt
 export class FlightSearchComponent {
   protected store = inject(BookingStore);
 
-  protected filter = this.store.filter;
-  protected readonly route = computed(
-    () => 'From ' + this.filter().from + ' to ' + this.filter().to + '.'
-  );
-  protected basket = this.store.basket;
-  protected flights = this.store.flights;
-
-  constructor() {
-    this.store.loadFlights(this.filter);
-  }
-
   protected delay(flight: Flight): void {
     const oldFlight = flight;
     const oldDate = new Date(oldFlight.date);
@@ -43,7 +32,7 @@ export class FlightSearchComponent {
     };
 
     this.store.setFlights(
-      this.flights().map(
+      this.store.flights().map(
         flight => flight.id === newFlight.id ? newFlight : flight
       )
     );
